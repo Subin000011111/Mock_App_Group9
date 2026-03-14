@@ -1,272 +1,269 @@
-cat > index.html << 'EOF'
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
 <title>Campus Booking System</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-
 /* ===== GLOBAL ===== */
-*{
-box-sizing:border-box;
-margin:0;
-padding:0
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-body{
-font-family:'Inter',Arial,sans-serif;
-background:#f4f6fb;
-min-height:100vh;
-display:flex
+body {
+  font-family: 'Inter', Arial, sans-serif;
+  background: #f4f6fb;
+  min-height: 100vh;
+  display: flex;
 }
 
 /* ===== SIDEBAR ===== */
-.sidebar{
-width:220px;
-background:#1e293b;
-color:#fff;
-display:flex;
-flex-direction:column;
-position:fixed;
-top:0;
-left:0;
-height:100vh;
-z-index:100
+.sidebar {
+  width: 220px;
+  background: #1e293b;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  z-index: 100;
 }
 
-.sb-logo{
-padding:22px 20px;
-border-bottom:1px solid #334155;
-font-size:15px;
-font-weight:700;
-display:flex;
-align-items:center;
-gap:10px
+.sb-logo {
+  padding: 22px 20px;
+  border-bottom: 1px solid #334155;
+  font-size: 15px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
 }
 
-.sb-logo span{
-font-size:22px
+.sb-logo span {
+  font-size: 22px;
 }
 
-.sb-nav-label{
-padding:20px 20px 8px;
-font-size:10px;
-font-weight:700;
-letter-spacing:.1em;
-text-transform:uppercase;
-color:#64748b
+.sb-nav-label {
+  padding: 20px 20px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #64748b;
 }
 
-.sb-link{
-display:flex;
-align-items:center;
-gap:10px;
-padding:10px 18px;
-color:#94a3b8;
-text-decoration:none;
-font-size:13.5px;
-font-weight:500;
-transition:background .15s,color .15s;
-margin:1px 8px;
-border-radius:7px
+.sb-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  color: #94a3b8;
+  text-decoration: none;
+  font-size: 13.5px;
+  font-weight: 500;
+  transition: background .15s, color .15s;
+  margin: 1px 8px;
+  border-radius: 7px;
 }
 
-.sb-link:hover{
-background:#334155;
-color:#fff
+.sb-link:hover {
+  background: #334155;
+  color: #fff;
 }
 
-.sb-link.active{
-background:#3b82f6;
-color:#fff;
-font-weight:600
+.sb-link.active {
+  background: #3b82f6;
+  color: #fff;
+  font-weight: 600;
 }
 
 /* ===== TOPBAR ===== */
-.topbar{
-position:fixed;
-top:0;
-left:220px;
-right:0;
-height:58px;
-background:#fff;
-border-bottom:1px solid #e2e8f0;
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:0 28px;
-z-index:90
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 220px;
+  right: 0;
+  height: 58px;
+  background: #fff;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  z-index: 90;
 }
 
-.tb-title{
-font-size:15px;
-font-weight:700;
-color:#1e293b
+.tb-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1e293b;
 }
 
-.tb-avatar{
-width:34px;
-height:34px;
-background:#3b82f6;
-color:#fff;
-border-radius:50%;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:12px;
-font-weight:700
+.tb-avatar {
+  width: 34px;
+  height: 34px;
+  background: #3b82f6;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
 }
 
 /* ===== MAIN ===== */
-.main{
-margin-left:220px;
-margin-top:58px;
-flex:1;
-padding:30px
+.main {
+  margin-left: 220px;
+  margin-top: 58px;
+  flex: 1;
+  padding: 30px;
 }
 
 /* ===== HERO ===== */
-.hero{
-background:linear-gradient(135deg,#1e3a8a,#2563eb,#3b82f6);
-border-radius:14px;
-padding:38px 40px;
-color:#fff;
-margin-bottom:24px
+.hero {
+  background: linear-gradient(135deg,#1e3a8a,#2563eb,#3b82f6);
+  border-radius: 14px;
+  padding: 38px 40px;
+  color: #fff;
+  margin-bottom: 24px;
 }
 
-.hero h1{
-font-size:28px;
-font-weight:800;
-margin-bottom:10px
+.hero h1 {
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 10px;
 }
 
-.hero p{
-font-size:14px;
-opacity:.88;
-max-width:440px;
-line-height:1.7;
-margin-bottom:24px
+.hero p {
+  font-size: 14px;
+  opacity: .88;
+  max-width: 440px;
+  line-height: 1.7;
+  margin-bottom: 24px;
 }
 
-.hero-btns{
-display:flex;
-gap:10px
+.hero-btns {
+  display: flex;
+  gap: 10px;
 }
 
-.btn-white{
-background:#fff;
-color:#1d4ed8;
-border:none;
-border-radius:50px;
-padding:10px 22px;
-font-size:13px;
-font-weight:700;
-cursor:pointer;
-text-decoration:none
+.btn-white {
+  background: #fff;
+  color: #1d4ed8;
+  border: none;
+  border-radius: 50px;
+  padding: 10px 22px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
 }
 
-.btn-outline{
-background:transparent;
-color:#fff;
-border:1.5px solid rgba(255,255,255,.5);
-border-radius:50px;
-padding:10px 22px;
-font-size:13px;
-font-weight:600;
-cursor:pointer;
-text-decoration:none
+.btn-outline {
+  background: transparent;
+  color: #fff;
+  border: 1.5px solid rgba(255,255,255,.5);
+  border-radius: 50px;
+  padding: 10px 22px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
 }
 
 /* ===== STATS ===== */
-.stat-row{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:16px;
-margin-bottom:24px
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 16px;
+  margin-bottom: 24px;
 }
 
-.stat{
-background:#fff;
-border:1px solid #e2e8f0;
-border-radius:12px;
-padding:20px;
-display:flex;
-justify-content:space-between
+.stat {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
 }
 
-.stat-val{
-font-size:30px;
-font-weight:800;
-color:#1e293b
+.stat-val {
+  font-size: 30px;
+  font-weight: 800;
+  color: #1e293b;
 }
 
 /* ===== CARDS ===== */
-.two-col{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:16px
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
 }
 
-.card{
-background:#fff;
-border:1px solid #e2e8f0;
-border-radius:12px;
-padding:20px
+.card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px;
 }
 
-.card-title{
-font-size:14px;
-font-weight:700
+.card-title {
+  font-size: 14px;
+  font-weight: 700;
 }
 
 /* ===== LIST ITEMS ===== */
-.item{
-display:flex;
-gap:12px;
-padding:11px 0;
-border-bottom:1px solid #f1f5f9
+.item {
+  display: flex;
+  gap: 12px;
+  padding: 11px 0;
+  border-bottom: 1px solid #f1f5f9;
 }
 
-.item:last-child{
-border-bottom:none
+.item:last-child {
+  border-bottom: none;
 }
 
-.item-name{
-font-size:13px;
-font-weight:600
+.item-name {
+  font-size: 13px;
+  font-weight: 600;
 }
 
-.item-meta{
-font-size:11.5px;
-color:#64748b
+.item-meta {
+  font-size: 11.5px;
+  color: #64748b;
 }
 
 /* ===== EMPTY ===== */
-.empty-state{
-text-align:center;
-padding:28px 16px
+.empty-state {
+  text-align: center;
+  padding: 28px 16px;
 }
 
-.empty-state p{
-font-size:13px;
-color:#64748b
+.empty-state p {
+  font-size: 13px;
+  color: #64748b;
 }
 
 /* ===== TOAST ===== */
-.toast{
-position:fixed;
-bottom:22px;
-right:22px;
-background:#1e293b;
-color:#fff;
-padding:11px 18px;
-border-radius:10px;
-font-size:13px;
-opacity:0
+.toast {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  background: #1e293b;
+  color: #fff;
+  padding: 11px 18px;
+  border-radius: 10px;
+  font-size: 13px;
+  opacity: 0;
 }
 
 </style>
@@ -276,132 +273,90 @@ opacity:0
 
 <!-- SIDEBAR -->
 <aside class="sidebar">
+  <!-- Clickable Logo -->
+  <div class="sb-logo" onclick="window.location.href='index.html'">
+    <span>🎓</span>
+    <div>
+      <div style="font-size:14px;font-weight:700">My Bookings</div>
+      <div style="font-size:11px;color:#64748b;margin-top:1px">Campus Portal</div>
+    </div>
+  </div>
 
-<div class="sb-logo">
-<span>🎓</span>
-<div>
-<div style="font-size:14px;font-weight:700">My Bookings</div>
-<div style="font-size:11px;color:#64748b">Campus Portal</div>
-</div>
-</div>
-
-<div class="sb-nav-label">Navigation</div>
-
-<a class="sb-link active" href="index.html">📊 Dashboard</a>
-<a class="sb-link" href="BookRoom.html">🏛️ Book a Room</a>
-<a class="sb-link" href="Appoinment.html">👤 Book Appointment</a>
-<a class="sb-link" href="CampusMap.html">🗺️ Campus Map</a>
-<a class="sb-link" href="MyBooking.html">📋 My Bookings</a>
-
+  <div class="sb-nav-label">Navigation</div>
+  <a class="sb-link active" href="index.html">📊 Dashboard</a>
+  <a class="sb-link" href="BookRoom.html">🏛️ Book a Room</a>
+  <a class="sb-link" href="Appoinment.html">👤 Book Appointment</a>
+  <a class="sb-link" href="CampusMap.html">🗺️ Campus Map</a>
+  <a class="sb-link" href="MyBooking.html">📋 My Bookings</a>
 </aside>
 
 <!-- TOPBAR -->
 <div class="topbar">
-<div class="tb-title">Dashboard</div>
-<div class="tb-avatar">JD</div>
+  <div class="tb-title">Dashboard</div>
+  <div class="tb-avatar">JD</div>
 </div>
 
 <!-- MAIN -->
 <div class="main">
+  <div class="hero">
+    <h1>Welcome back, Student 👋</h1>
+    <p>Manage your campus life efficiently. Book study rooms, schedule faculty appointments, and navigate the campus all from one place.</p>
+    <div class="hero-btns">
+      <a class="btn-white" href="BookRoom.html">Book a Room</a>
+      <a class="btn-outline" href="Appoinment.html">Schedule Appointment</a>
+    </div>
+  </div>
 
-<div class="hero">
+  <!-- STATS -->
+  <div class="stat-row">
+    <div class="stat">
+      <div>
+        <div>Total Active Bookings</div>
+        <div class="stat-val" id="st-tot">0</div>
+      </div>
+    </div>
+    <div class="stat">
+      <div>
+        <div>Room Reservations</div>
+        <div class="stat-val" id="st-rm">0</div>
+      </div>
+    </div>
+    <div class="stat">
+      <div>
+        <div>Faculty Appointments</div>
+        <div class="stat-val" id="st-ap">0</div>
+      </div>
+    </div>
+  </div>
 
-<h1>Welcome back, Student 👋</h1>
-
-<p>
-Manage your campus life efficiently. Book study rooms, schedule faculty
-appointments, and navigate the campus all from one place.
-</p>
-
-<div class="hero-btns">
-<a class="btn-white" href="BookRoom.html">Book a Room</a>
-<a class="btn-outline" href="Appoinment.html">Schedule Appointment</a>
-</div>
-
-</div>
-
-<!-- STATS -->
-<div class="stat-row">
-
-<div class="stat">
-<div>
-<div>Total Active Bookings</div>
-<div class="stat-val" id="st-tot">0</div>
-</div>
-</div>
-
-<div class="stat">
-<div>
-<div>Room Reservations</div>
-<div class="stat-val" id="st-rm">0</div>
-</div>
-</div>
-
-<div class="stat">
-<div>
-<div>Faculty Appointments</div>
-<div class="stat-val" id="st-ap">0</div>
-</div>
-</div>
-
-</div>
-
-<!-- UPCOMING -->
-<div class="two-col">
-
-<div class="card">
-<div class="card-title">Upcoming Rooms</div>
-<div id="d-rm">
-<div class="empty-state">
-<p>No upcoming room bookings.</p>
-</div>
-</div>
-</div>
-
-<div class="card">
-<div class="card-title">Upcoming Appointments</div>
-<div id="d-ap">
-<div class="empty-state">
-<p>No upcoming appointments.</p>
-</div>
-</div>
-</div>
-
-</div>
-
+  <!-- UPCOMING -->
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">Upcoming Rooms</div>
+      <div id="d-rm" class="empty-state"><p>No upcoming room bookings.</p></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Upcoming Appointments</div>
+      <div id="d-ap" class="empty-state"><p>No upcoming appointments.</p></div>
+    </div>
+  </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
-
-<div class="sb-logo" onclick="window.location.href='index.html'" style="cursor:pointer">
-  <span>🎓</span>
-  <div>
-    <div style="font-size:14px;font-weight:700">My Bookings</div>
-    <div style="font-size:11px;color:#64748b;margin-top:1px">Campus Portal</div>
-  </div>
-</div>
-
-
 <script>
-
 function ld(k){
-try{
-return JSON.parse(localStorage.getItem(k)||'[]')
-}catch(e){
-return[]
-}
+  try { return JSON.parse(localStorage.getItem(k)||'[]'); } 
+  catch(e){ return []; }
 }
 
-const R=ld('cp_rooms')
-const A=ld('cp_appts')
+const R = ld('cp_rooms');
+const A = ld('cp_appts');
 
-document.getElementById('st-tot').textContent=R.length+A.length
-document.getElementById('st-rm').textContent=R.length
-document.getElementById('st-ap').textContent=A.length
-
+document.getElementById('st-tot').textContent = R.length + A.length;
+document.getElementById('st-rm').textContent = R.length;
+document.getElementById('st-ap').textContent = A.length;
 </script>
 
 </body>
 </html>
-EOF
