@@ -1,39 +1,407 @@
+cat > MyBooking.html << 'EOF'
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
 <title>My Bookings</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+font-family:'Inter',Arial,sans-serif;
+background:#f4f6fb;
+min-height:100vh;
+display:flex
+}
+
+.sidebar{
+width:220px;
+background:#1e293b;
+color:#fff;
+display:flex;
+flex-direction:column;
+position:fixed;
+top:0;
+left:0;
+height:100vh;
+z-index:100
+}
+
+.sb-logo{
+padding:22px 20px;
+border-bottom:1px solid #334155;
+font-size:15px;
+font-weight:700;
+color:#fff;
+display:flex;
+align-items:center;
+gap:10px
+}
+
+.sb-logo span{font-size:22px}
+
+.sb-nav-label{
+padding:20px 20px 8px;
+font-size:10px;
+font-weight:700;
+letter-spacing:.1em;
+text-transform:uppercase;
+color:#64748b
+}
+
+.sb-link{
+display:flex;
+align-items:center;
+gap:10px;
+padding:10px 18px;
+color:#94a3b8;
+text-decoration:none;
+font-size:13.5px;
+font-weight:500;
+transition:background .15s,color .15s;
+margin:1px 8px;
+border-radius:7px
+}
+
+.sb-link:hover{background:#334155;color:#fff}
+.sb-link.active{background:#3b82f6;color:#fff;font-weight:600}
+
+.sb-link .ico{
+font-size:16px;
+width:20px;
+text-align:center
+}
+
+.topbar{
+position:fixed;
+top:0;
+left:220px;
+right:0;
+height:58px;
+background:#fff;
+border-bottom:1px solid #e2e8f0;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 28px;
+z-index:90
+}
+
+.tb-title{
+font-size:15px;
+font-weight:700;
+color:#1e293b
+}
+
+.tb-avatar{
+width:34px;
+height:34px;
+background:#3b82f6;
+color:#fff;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:12px;
+font-weight:700
+}
+
+.main{
+margin-left:220px;
+margin-top:58px;
+flex:1;
+padding:30px
+}
+
+.pg-title{
+font-size:24px;
+font-weight:800;
+color:#1e293b;
+margin-bottom:4px
+}
+
+.pg-sub{
+font-size:13.5px;
+color:#64748b;
+margin-bottom:22px
+}
+
+.tabs{
+display:flex;
+background:#f1f5f9;
+border-radius:10px;
+padding:4px;
+width:fit-content;
+margin-bottom:22px
+}
+
+.tab{
+padding:8px 22px;
+border-radius:8px;
+border:none;
+font-family:inherit;
+font-size:13px;
+font-weight:600;
+color:#64748b;
+cursor:pointer;
+transition:all .15s;
+background:none
+}
+
+.tab.active{
+background:#fff;
+color:#1e293b;
+box-shadow:0 1px 3px rgba(0,0,0,.10)
+}
+
+.sec-lbl{
+display:flex;
+align-items:center;
+gap:7px;
+font-size:13.5px;
+font-weight:700;
+color:#334155;
+margin-bottom:14px
+}
+
+.gdot{
+width:9px;
+height:9px;
+background:#16a34a;
+border-radius:50%
+}
+
+.bklist{
+display:flex;
+flex-direction:column;
+gap:8px
+}
+
+.bkrow{
+background:#fff;
+border:1px solid #e2e8f0;
+border-radius:12px;
+padding:16px 18px;
+display:flex;
+align-items:center;
+gap:14px;
+box-shadow:0 1px 3px rgba(0,0,0,.07)
+}
+
+.bkico{
+width:42px;
+height:42px;
+background:#eff6ff;
+border-radius:10px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:18px
+}
+
+.bkinfo{flex:1}
+
+.bkname{
+font-size:14px;
+font-weight:700;
+color:#1e293b
+}
+
+.conf{
+background:#f0fdf4;
+color:#16a34a;
+font-size:10.5px;
+font-weight:700;
+padding:2px 8px;
+border-radius:20px;
+margin-left:6px
+}
+
+.bkmeta{
+display:flex;
+gap:12px;
+font-size:12px;
+color:#64748b;
+margin-top:5px
+}
+
+.cancel-btn{
+color:#dc2626;
+background:none;
+border:none;
+font-size:13px;
+font-weight:600;
+cursor:pointer
+}
+
+.empty-bk{
+text-align:center;
+padding:44px 20px;
+color:#64748b;
+font-size:13.5px
+}
+
+.toast{
+position:fixed;
+bottom:22px;
+right:22px;
+background:#1e293b;
+color:#fff;
+padding:11px 18px;
+border-radius:10px;
+font-size:13px;
+opacity:0;
+transform:translateY(60px);
+transition:.28s
+}
+
+.toast.show{
+opacity:1;
+transform:translateY(0)
+}
+</style>
 </head>
 
 <body>
 
-<h1>My Bookings</h1>
+<aside class="sidebar">
+<div class="sb-logo">
+<span>🎓</span>
+<div>
+<div style="font-size:14px;font-weight:700">My Bookings</div>
+<div style="font-size:11px;color:#64748b;margin-top:1px">Campus Portal</div>
+</div>
+</div>
 
-<a href="index.html">Back to Dashboard</a>
+<div class="sb-nav-label">Navigation</div>
 
-<table border="1" cellpadding="10">
+<a class="sb-link" href="index.html"><span class="ico">📊</span>Dashboard</a>
+<a class="sb-link" href="BookRoom.html"><span class="ico">🏛️</span>Book a Room</a>
+<a class="sb-link" href="Appoinment.html"><span class="ico">👤</span>Book Appointment</a>
+<a class="sb-link" href="CampusMap.html"><span class="ico">🗺️</span>Campus Map</a>
+<a class="sb-link active" href="MyBooking.html"><span class="ico">📋</span>My Bookings</a>
+</aside>
 
-<tr>
-<th>Type</th>
-<th>Location</th>
-<th>Date</th>
-<th>Time</th>
-</tr>
+<div class="topbar">
+<div class="tb-title">Manage Bookings</div>
+<div class="tb-avatar">JD</div>
+</div>
 
-<tr>
-<td>Room</td>
-<td>A203</td>
-<td>March 20</td>
-<td>2:00PM</td>
-</tr>
+<div class="main">
 
-<tr>
-<td>Appointment</td>
-<td>Professor Karim</td>
-<td>March 22</td>
-<td>11:00AM</td>
-</tr>
+<div class="pg-title">Manage Bookings</div>
+<div class="pg-sub">View, reschedule, or cancel your reservations.</div>
 
-</table>
+<div class="tabs">
+<button class="tab active" id="tab-r" onclick="switchTab('r')">Room Bookings</button>
+<button class="tab" id="tab-a" onclick="switchTab('a')">Appointments</button>
+</div>
+
+<div id="panel-r">
+<div class="sec-lbl"><div class="gdot"></div> Active Reservations</div>
+<div class="bklist" id="list-r"></div>
+</div>
+
+<div id="panel-a" style="display:none">
+<div class="sec-lbl"><div class="gdot"></div> Active Appointments</div>
+<div class="bklist" id="list-a"></div>
+</div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+
+function ld(k){
+try{return JSON.parse(localStorage.getItem(k)||'[]')}
+catch(e){return[]}
+}
+
+function sv(k,v){
+localStorage.setItem(k,JSON.stringify(v))
+}
+
+function render(){
+
+const R=ld('cp_rooms')
+const A=ld('cp_appts')
+
+const rl=document.getElementById('list-r')
+const al=document.getElementById('list-a')
+
+rl.innerHTML=!R.length
+?`<div class="empty-bk">No room bookings yet. <a href="BookRoom.html">Book a room →</a></div>`
+:R.map(b=>`
+<div class="bkrow">
+<div class="bkico">🏛️</div>
+<div class="bkinfo">
+<div class="bkname">${b.room} <span class="conf">Confirmed</span></div>
+<div class="bkmeta">
+<span>📅 ${b.date}</span>
+<span>⏰ ${b.time}</span>
+<span>${b.name}</span>
+</div>
+</div>
+<button class="cancel-btn" onclick="cancelR(${b.id})">✕ Cancel</button>
+</div>
+`).join('')
+
+al.innerHTML=!A.length
+?`<div class="empty-bk">No appointments yet. <a href="Appoinment.html">Book one →</a></div>`
+:A.map(b=>`
+<div class="bkrow">
+<div class="bkico">👤</div>
+<div class="bkinfo">
+<div class="bkname">${b.prof} <span class="conf">Confirmed</span></div>
+<div class="bkmeta">
+<span>📅 ${b.date}</span>
+<span>⏰ ${b.time}</span>
+<span>${b.name}</span>
+</div>
+</div>
+<button class="cancel-btn" onclick="cancelA(${b.id})">✕ Cancel</button>
+</div>
+`).join('')
+}
+
+function cancelR(id){
+sv('cp_rooms',ld('cp_rooms').filter(b=>b.id!==id))
+render()
+showToast('Room booking cancelled.')
+}
+
+function cancelA(id){
+sv('cp_appts',ld('cp_appts').filter(b=>b.id!==id))
+render()
+showToast('Appointment cancelled.')
+}
+
+function switchTab(t){
+['r','a'].forEach(x=>{
+document.getElementById('tab-'+x).classList.toggle('active',x===t)
+document.getElementById('panel-'+x).style.display=x==='r'&&t==='r'||x==='a'&&t==='a'?'block':'none'
+})
+}
+
+let _t
+
+function showToast(msg){
+const el=document.getElementById('toast')
+el.textContent=msg
+el.className='toast show'
+clearTimeout(_t)
+_t=setTimeout(()=>el.classList.remove('show'),3000)
+}
+
+render()
+
+</script>
 
 </body>
 </html>
+EOF
+
+echo "  ✓ MyBooking.html"

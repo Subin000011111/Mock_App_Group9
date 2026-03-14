@@ -1,39 +1,696 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<title>Appointments</title>
+<meta charset="UTF-8">
+<title>Book Appointment</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:'Inter',Arial,sans-serif;
+  background:#f4f6fb;
+  min-height:100vh;
+  display:flex;
+}
+
+/* Sidebar */
+
+.sidebar{
+  width:220px;
+  background:#1e293b;
+  color:#fff;
+  display:flex;
+  flex-direction:column;
+  position:fixed;
+  top:0;
+  left:0;
+  height:100vh;
+  z-index:100;
+}
+
+.sb-logo{
+  padding:22px 20px;
+  border-bottom:1px solid #334155;
+  font-size:15px;
+  font-weight:700;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.sb-logo span{
+  font-size:22px;
+}
+
+.sb-nav-label{
+  padding:20px 20px 8px;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:#64748b;
+}
+
+.sb-link{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 18px;
+  color:#94a3b8;
+  text-decoration:none;
+  font-size:13.5px;
+  font-weight:500;
+  transition:background .15s,color .15s;
+  margin:1px 8px;
+  border-radius:7px;
+}
+
+.sb-link:hover{
+  background:#334155;
+  color:#fff;
+}
+
+.sb-link.active{
+  background:#3b82f6;
+  color:#fff;
+  font-weight:600;
+}
+
+.sb-link .ico{
+  font-size:16px;
+  width:20px;
+  text-align:center;
+}
+
+/* Topbar */
+
+.topbar{
+  position:fixed;
+  top:0;
+  left:220px;
+  right:0;
+  height:58px;
+  background:#fff;
+  border-bottom:1px solid #e2e8f0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 28px;
+  z-index:90;
+}
+
+.tb-title{
+  font-size:15px;
+  font-weight:700;
+  color:#1e293b;
+}
+
+.tb-avatar{
+  width:34px;
+  height:34px;
+  background:#3b82f6;
+  color:#fff;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:12px;
+  font-weight:700;
+}
+
+/* Main */
+
+.main{
+  margin-left:220px;
+  margin-top:58px;
+  flex:1;
+  padding:30px;
+}
+
+.pg-title{
+  font-size:24px;
+  font-weight:800;
+  color:#1e293b;
+  margin-bottom:4px;
+}
+
+.pg-sub{
+  font-size:13.5px;
+  color:#64748b;
+  margin-bottom:22px;
+}
+
+/* Search */
+
+.sbar{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  background:#fff;
+  border:1.5px solid #e2e8f0;
+  border-radius:10px;
+  padding:11px 14px;
+  margin-bottom:22px;
+  max-width:460px;
+  transition:border-color .2s;
+}
+
+.sbar:focus-within{
+  border-color:#3b82f6;
+}
+
+.sbar input{
+  background:none;
+  border:none;
+  outline:none;
+  font-family:inherit;
+  font-size:13.5px;
+  color:#334155;
+  flex:1;
+}
+
+.sbar input::placeholder{
+  color:#94a3b8;
+}
+
+/* Faculty Grid */
+
+.fac-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+
+.fac-card{
+  background:#fff;
+  border:1px solid #e2e8f0;
+  border-radius:12px;
+  padding:26px 18px;
+  text-align:center;
+  box-shadow:0 1px 3px rgba(0,0,0,.07);
+  transition:box-shadow .2s,transform .2s;
+}
+
+.fac-card:hover{
+  box-shadow:0 6px 20px rgba(0,0,0,.10);
+  transform:translateY(-2px);
+}
+
+.fac-av{
+  width:72px;
+  height:72px;
+  background:#eff6ff;
+  border:3px solid #bfdbfe;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  margin:0 auto 14px;
+}
+
+.fac-name{
+  font-size:14.5px;
+  font-weight:700;
+  color:#1e293b;
+  margin-bottom:3px;
+}
+
+.fac-dept{
+  font-size:12px;
+  color:#3b82f6;
+  font-weight:600;
+  margin-bottom:11px;
+}
+
+.fac-row{
+  font-size:12px;
+  color:#64748b;
+  margin-bottom:4px;
+}
+
+.btn-sch{
+  width:100%;
+  background:#fff;
+  color:#475569;
+  border:1.5px solid #e2e8f0;
+  border-radius:8px;
+  padding:9px;
+  font-family:inherit;
+  font-size:12.5px;
+  font-weight:600;
+  cursor:pointer;
+  transition:all .2s;
+  margin-top:13px;
+}
+
+.btn-sch:hover{
+  border-color:#3b82f6;
+  color:#3b82f6;
+  background:#eff6ff;
+}
+
+/* Modal */
+
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.4);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:200;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .2s;
+}
+
+.overlay.open{
+  opacity:1;
+  pointer-events:all;
+}
+
+.modal{
+  background:#fff;
+  border-radius:14px;
+  padding:28px;
+  width:420px;
+  max-width:95vw;
+  box-shadow:0 20px 60px rgba(0,0,0,.18);
+  transform:scale(.95);
+  transition:transform .2s;
+}
+
+.overlay.open .modal{
+  transform:scale(1);
+}
+
+.modal h2{
+  font-size:17px;
+  font-weight:800;
+  color:#1e293b;
+  margin-bottom:3px;
+}
+
+.modal-sub{
+  font-size:12px;
+  color:#64748b;
+  margin-bottom:20px;
+}
+
+/* Form */
+
+.fg{
+  margin-bottom:14px;
+}
+
+.fg label{
+  display:block;
+  font-size:11.5px;
+  font-weight:600;
+  color:#475057;
+  margin-bottom:5px;
+}
+
+.fg input,
+.fg select{
+  width:100%;
+  border:1.5px solid #e2e8f0;
+  border-radius:8px;
+  padding:10px 12px;
+  font-family:inherit;
+  font-size:13.5px;
+  color:#1e293b;
+  outline:none;
+  transition:border-color .2s;
+  background:#fff;
+  appearance:none;
+}
+
+.fg input:focus,
+.fg select:focus{
+  border-color:#3b82f6;
+}
+
+.fg-2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+/* Buttons */
+
+.mbtns{
+  display:flex;
+  gap:8px;
+  margin-top:20px;
+}
+
+.btn-sec{
+  flex:1;
+  background:#f1f5f9;
+  color:#475569;
+  border:none;
+  border-radius:8px;
+  padding:11px;
+  font-family:inherit;
+  font-size:13.5px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.btn-sec:hover{
+  background:#e2e8f0;
+}
+
+.btn-pri{
+  flex:1;
+  background:#3b82f6;
+  color:#fff;
+  border:none;
+  border-radius:8px;
+  padding:11px;
+  font-family:inherit;
+  font-size:13.5px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.btn-pri:hover{
+  background:#2563eb;
+}
+
+/* Toast */
+
+.toast{
+  position:fixed;
+  bottom:22px;
+  right:22px;
+  background:#1e293b;
+  color:#fff;
+  padding:11px 18px;
+  border-radius:10px;
+  font-size:13px;
+  font-weight:500;
+  z-index:999;
+  opacity:0;
+  transform:translateY(60px);
+  transition:all .28s ease;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.toast.ok{
+  background:#16a34a;
+}
+
+</style>
 </head>
+
 
 <body>
 
-<h1>Book Appointment</h1>
+<!-- Sidebar -->
 
-<a href="index.html">Back to Dashboard</a>
+<aside class="sidebar">
 
-<form>
+<div class="sb-logo">
+<span>🎓</span>
+<div>
+<div style="font-size:14px;font-weight:700">My Bookings</div>
+<div style="font-size:11px;color:#64748b;margin-top:1px">Campus Portal</div>
+</div>
+</div>
 
-<label>Select Faculty:</label>
-<select>
-<option>Professor Karim</option>
-<option>Professor Smith</option>
-<option>Professor Lee</option>
+<div class="sb-nav-label">Navigation</div>
+
+<a class="sb-link" href="index.html"><span class="ico">📊</span>Dashboard</a>
+<a class="sb-link" href="BookRoom.html"><span class="ico">🏛️</span>Book a Room</a>
+<a class="sb-link active" href="Appoinment.html"><span class="ico">👤</span>Book Appointment</a>
+<a class="sb-link" href="CampusMap.html"><span class="ico">🗺️</span>Campus Map</a>
+<a class="sb-link" href="MyBooking.html"><span class="ico">📋</span>My Bookings</a>
+
+</aside>
+
+
+<!-- Topbar -->
+
+<div class="topbar">
+<div class="tb-title">Faculty Appointments</div>
+<div class="tb-avatar">JD</div>
+</div>
+
+
+<!-- Main -->
+
+<div class="main">
+
+<div class="pg-title">Faculty Appointments</div>
+<div class="pg-sub">Connect with professors for guidance and office hours.</div>
+
+<div class="sbar">
+<span>🔍</span>
+<input type="text" placeholder="Search by professor or department..." oninput="filterFac(this.value)">
+</div>
+
+<div class="fac-grid" id="grid"></div>
+
+</div>
+
+
+<!-- Modal -->
+
+<div class="overlay" id="modal">
+
+<div class="modal">
+
+<h2 id="m-h">Schedule Appointment</h2>
+<div class="modal-sub">Choose a date and time for your meeting.</div>
+
+<div class="fg">
+<label>Your Name</label>
+<input id="m-name" placeholder="Enter your name">
+</div>
+
+<div class="fg-2">
+
+<div class="fg">
+<label>Date</label>
+<input type="date" id="m-date">
+</div>
+
+<div class="fg">
+<label>Time</label>
+<input type="time" id="m-time" value="09:00">
+</div>
+
+</div>
+
+<div class="fg">
+
+<label>Meeting Type</label>
+
+<select id="m-type">
+<option>Academic Advising</option>
+<option>Assignment Review</option>
+<option>Grade Discussion</option>
+<option>Research Inquiry</option>
+<option>General Question</option>
 </select>
 
-<br><br>
+</div>
 
-<label>Date:</label>
-<input type="date">
+<div class="mbtns">
+<button class="btn-sec" onclick="closeM()">Cancel</button>
+<button class="btn-pri" onclick="confirmAppt()">Request Appointment</button>
+</div>
 
-<br><br>
+</div>
+</div>
 
-<label>Time:</label>
-<input type="time">
 
-<br><br>
+<div class="toast" id="toast"></div>
 
-<button>Request Appointment</button>
 
-</form>
+<script>
+
+const FAC = [
+
+{ id:1, name:'Dr. Smith', ico:'👨‍🏫', dept:'Computer Science', email:'smith@campus.edu', room:'Block A, Room 305' },
+
+{ id:2, name:'Dr. Johnson', ico:'👩‍🏫', dept:'Mathematics', email:'johnson@campus.edu', room:'Science Bldg, Room 210' },
+
+{ id:3, name:'Dr. Lee', ico:'👨‍🏫', dept:'Physics', email:'lee@campus.edu', room:'Science Bldg, Room 105' },
+
+{ id:4, name:'Dr. Brown', ico:'👩‍🏫', dept:'English Literature', email:'brown@campus.edu', room:'Arts Bldg, Room 208' },
+
+{ id:5, name:'Prof. Wilson', ico:'👨‍🏫', dept:'Engineering', email:'wilson@campus.edu', room:'Eng Block, Room 401' },
+
+{ id:6, name:'Dr. Davis', ico:'👩‍🏫', dept:'Chemistry', email:'davis@campus.edu', room:'Science Bldg, Room 315' }
+
+];
+
+let sel = null;
+
+
+function renderFac(list){
+
+document.getElementById('grid').innerHTML = list.map(f => `
+
+<div class="fac-card">
+
+<div class="fac-av">${f.ico}</div>
+<div class="fac-name">${f.name}</div>
+<div class="fac-dept">${f.dept}</div>
+
+<div class="fac-row">✉️ ${f.email}</div>
+<div class="fac-row">📍 ${f.room}</div>
+
+<button class="btn-sch" onclick="openM(${f.id})">📅 View Schedule</button>
+
+</div>
+
+`).join('');
+
+}
+
+
+function filterFac(v){
+
+renderFac(
+FAC.filter(f =>
+f.name.toLowerCase().includes(v.toLowerCase()) ||
+f.dept.toLowerCase().includes(v.toLowerCase())
+)
+);
+
+}
+
+
+function openM(id){
+
+sel = FAC.find(f => f.id === id);
+
+document.getElementById('m-h').textContent = 'Appointment with ' + sel.name;
+
+document.getElementById('m-date').value =
+new Date().toISOString().split('T')[0];
+
+document.getElementById('m-name').value = '';
+
+document.getElementById('modal').classList.add('open');
+
+}
+
+
+function closeM(){
+
+document.getElementById('modal').classList.remove('open');
+
+}
+
+
+document.getElementById('modal').addEventListener('click', e => {
+
+if(e.target.id === 'modal') closeM();
+
+});
+
+
+function fmtDate(s){
+
+return new Date(s + 'T00:00:00').toLocaleDateString('en-US',{
+month:'long',
+day:'numeric',
+year:'numeric'
+});
+
+}
+
+
+function fmtT(t){
+
+if(!t) return '';
+
+const [h,m] = t.split(':').map(Number);
+
+return `${h%12||12}:${String(m).padStart(2,'0')} ${h>=12?'PM':'AM'}`;
+
+}
+
+
+function confirmAppt(){
+
+const name = document.getElementById('m-name').value.trim();
+const date = document.getElementById('m-date').value;
+const time = document.getElementById('m-time').value;
+const type = document.getElementById('m-type').value;
+
+if(!name || !date){
+showToast('Please fill in all fields.');
+return;
+}
+
+const saved = JSON.parse(localStorage.getItem('cp_appts') || '[]');
+
+saved.push({
+id:Date.now(),
+prof:sel.name,
+dept:sel.dept,
+date:fmtDate(date),
+time:fmtT(time),
+type,
+name
+});
+
+localStorage.setItem('cp_appts', JSON.stringify(saved));
+
+closeM();
+
+showToast('✓ Appointment requested!','ok');
+
+}
+
+
+let _t;
+
+function showToast(msg,type){
+
+const el = document.getElementById('toast');
+
+el.textContent = msg;
+
+el.className = 'toast show' + (type==='ok' ? ' ok' : '');
+
+clearTimeout(_t);
+
+_t = setTimeout(()=>{
+el.classList.remove('show');
+},3000);
+
+}
+
+
+renderFac(FAC);
+
+document.getElementById('m-date').min =
+new Date().toISOString().split('T')[0];
+
+</script>
+
 
 </body>
 </html>

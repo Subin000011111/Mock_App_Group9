@@ -1,39 +1,374 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<title>Book Room</title>
+<meta charset="UTF-8">
+<title>Book a Room</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', Arial, sans-serif;
+  background: #f4f6fb;
+  min-height: 100vh;
+  display: flex;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 220px;
+  background: #1e293b;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  z-index: 100;
+}
+
+.sb-logo {
+  padding: 22px 20px;
+  border-bottom: 1px solid #334155;
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sb-logo span {
+  font-size: 22px;
+}
+
+.sb-nav-label {
+  padding: 20px 20px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.sb-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  color: #94a3b8;
+  text-decoration: none;
+  font-size: 13.5px;
+  font-weight: 500;
+  transition: background .15s, color .15s;
+  margin: 1px 8px;
+  border-radius: 7px;
+}
+
+.sb-link:hover {
+  background: #334155;
+  color: #fff;
+}
+
+.sb-link.active {
+  background: #3b82f6;
+  color: #fff;
+  font-weight: 600;
+}
+
+.sb-link .ico {
+  font-size: 16px;
+  width: 20px;
+  text-align: center;
+}
+
+/* Topbar */
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 220px;
+  right: 0;
+  height: 58px;
+  background: #fff;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  z-index: 90;
+}
+
+.tb-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.tb-avatar {
+  width: 34px;
+  height: 34px;
+  background: #3b82f6;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* Main */
+.main {
+  margin-left: 220px;
+  margin-top: 58px;
+  flex: 1;
+  padding: 30px;
+}
+
+.pg-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: #1e293b;
+  margin-bottom: 4px;
+}
+
+.pg-sub {
+  font-size: 13.5px;
+  color: #64748b;
+  margin-bottom: 22px;
+}
+
+/* Search bar */
+.sbar {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: #fff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 11px 14px;
+  margin-bottom: 22px;
+  max-width: 460px;
+  transition: border-color .2s;
+}
+
+.sbar:focus-within {
+  border-color: #3b82f6;
+}
+
+.sbar input {
+  background: none;
+  border: none;
+  outline: none;
+  font-family: inherit;
+  font-size: 13.5px;
+  color: #334155;
+  flex: 1;
+}
+
+.sbar input::placeholder {
+  color: #94a3b8;
+}
+
+/* Room grid */
+.rooms-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.room-card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,.07);
+  transition: box-shadow .2s, transform .2s;
+}
+
+.room-card:hover {
+  box-shadow: 0 6px 20px rgba(0,0,0,.10);
+  transform: translateY(-2px);
+}
+
+.room-thumb {
+  background: #eff6ff;
+  height: 115px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  font-size: 42px;
+}
+
+.badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 20px;
+}
+
+.badge-g {
+  background: #16a34a;
+  color: #fff;
+}
+
+.badge-r {
+  background: #dc2626;
+  color: #fff;
+}
+
+.room-body {
+  padding: 14px 16px 18px;
+}
+
+.room-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 4px;
+}
+
+.room-loc {
+  font-size: 12px;
+  color: #64748b;
+  margin-bottom: 11px;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 13px;
+}
+
+.tag {
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 3px 9px;
+  font-size: 11px;
+  color: #475569;
+  font-weight: 500;
+}
+
+.btn-sel {
+  width: 100%;
+  background: #3b82f6;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 11px;
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .2s;
+}
+
+.btn-sel:hover {
+  background: #2563eb;
+}
+
+.btn-sel:disabled {
+  background: #cbd5e1;
+  cursor: not-allowed;
+}
+</style>
 </head>
 
 <body>
 
-<h1>Book a Room</h1>
+<aside class="sidebar">
+  <div class="sb-logo">
+    <span>🎓</span>
+    <div>
+      <div style="font-size:14px;font-weight:700">My Bookings</div>
+      <div style="font-size:11px;color:#64748b;margin-top:1px">Campus Portal</div>
+    </div>
+  </div>
 
-<a href="index.html">Back to Dashboard</a>
+  <div class="sb-nav-label">Navigation</div>
+  <a class="sb-link" href="index.html"><span class="ico">📊</span>Dashboard</a>
+  <a class="sb-link active" href="BookRoom.html"><span class="ico">🏛️</span>Book a Room</a>
+  <a class="sb-link" href="Appoinment.html"><span class="ico">👤</span>Book Appointment</a>
+  <a class="sb-link" href="CampusMap.html"><span class="ico">🗺️</span>Campus Map</a>
+  <a class="sb-link" href="MyBooking.html"><span class="ico">📋</span>My Bookings</a>
+</aside>
 
-<form>
+<div class="topbar">
+  <div class="tb-title">Room Booking</div>
+  <div class="tb-avatar">JD</div>
+</div>
 
-<label>Room:</label>
-<select>
-<option>Room A101</option>
-<option>Room A203</option>
-<option>Room B105</option>
-</select>
+<div class="main">
+  <div class="pg-title">Book a Room</div>
+  <div class="pg-sub">Choose a room and reserve your slot.</div>
 
-<br><br>
+  <div class="sbar">
+    <span>🔍</span>
+    <input type="text" placeholder="Search by room or location..." oninput="filterRooms(this.value)">
+  </div>
 
-<label>Date:</label>
-<input type="date">
+  <div class="rooms-grid" id="rooms">
+    <div class="room-card">
+      <div class="room-thumb">🏛️</div>
+      <div class="room-body">
+        <div class="room-name">Room 101</div>
+        <div class="room-loc">Block A</div>
+        <div class="tags">
+          <div class="tag">Projector</div>
+          <div class="tag">Capacity 30</div>
+        </div>
+        <button class="btn-sel">Reserve</button>
+      </div>
+    </div>
+    <div class="room-card">
+      <div class="room-thumb">🏛️</div>
+      <div class="room-body">
+        <div class="room-name">Room 202</div>
+        <div class="room-loc">Science Bldg</div>
+        <div class="tags">
+          <div class="tag">Whiteboard</div>
+          <div class="tag">Capacity 20</div>
+        </div>
+        <button class="btn-sel">Reserve</button>
+      </div>
+    </div>
+    <div class="room-card">
+      <div class="room-thumb">🏛️</div>
+      <div class="room-body">
+        <div class="room-name">Room 303</div>
+        <div class="room-loc">Library</div>
+        <div class="tags">
+          <div class="tag">Computer Lab</div>
+          <div class="tag">Capacity 25</div>
+        </div>
+        <button class="btn-sel">Reserve</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-<br><br>
-
-<label>Time:</label>
-<input type="time">
-
-<br><br>
-
-<button>Book Room</button>
-
-</form>
+<script>
+function filterRooms(v){
+  const cards = document.querySelectorAll('.room-card');
+  cards.forEach(card=>{
+    const name = card.querySelector('.room-name').textContent.toLowerCase();
+    const loc = card.querySelector('.room-loc').textContent.toLowerCase();
+    card.style.display = (name.includes(v.toLowerCase()) || loc.includes(v.toLowerCase())) ? '' : 'none';
+  });
+}
+</script>
 
 </body>
 </html>
